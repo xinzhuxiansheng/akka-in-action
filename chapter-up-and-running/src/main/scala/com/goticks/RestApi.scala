@@ -10,11 +10,17 @@ import akka.util.Timeout
 
 import scala.concurrent.ExecutionContext
 
+/**
+ * RestApi是HTTP的基本适配器：负责JSON转换和所需的HTTP响应。
+ * @param system
+ * @param timeout
+ */
 class RestApi(system: ActorSystem, timeout: Timeout)
     extends RestRoutes {
   implicit val requestTimeout = timeout
   implicit def executionContext = system.dispatcher
 
+  // ActorSytem 通过actorOf() 创建BoxOffice actor，并返回ActorRef
   override def createBoxOffice(): ActorRef = {
     system.actorOf(BoxOffice.props,BoxOffice.name)
   }
@@ -66,8 +72,6 @@ trait RestRoutes extends BoxOfficeApi
         }
       }
     }
-
-
 
   def ticketsRoute =
     pathPrefix("events" / Segment / "tickets") { event =>

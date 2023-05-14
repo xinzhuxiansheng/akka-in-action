@@ -3,6 +3,7 @@ package com.goticks
 import akka.actor.{ Actor, Props, PoisonPill }
 
 object TicketSeller {
+  // 用于 ActorSystem 创建 TicketSeller
   def props(event: String) = Props(new TicketSeller(event))
 
   case class Add(tickets: Vector[Ticket])

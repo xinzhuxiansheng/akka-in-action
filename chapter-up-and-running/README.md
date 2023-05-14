@@ -1,3 +1,21 @@
+```shell
+# 创建活动
+http POST localhost:5005/events/RHCP tickets:=10
+http POST localhost:5005/events/DjMadlib tickets:=15
+
+# 请求所有活动的列表
+http GET localhost:5005/events
+
+# 买两张RHCP的票
+http POST localhost:5005/events/RHCP/tickets tickets:=2
+
+
+```
+
+
+
+
+
 Heroku deployment
 =================
 

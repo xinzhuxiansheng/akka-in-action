@@ -29,13 +29,14 @@ class BoxOffice(implicit timeout: Timeout) extends Actor {
   import BoxOffice._
   import context._
 
-
+  // 使用它的上下文创建TicketSeller,定义在独立的方法中，"使其在测试时易于覆盖"
   def createTicketSeller(name: String) =
     context.actorOf(TicketSeller.props(name), name)
 
   def receive = {
     case CreateEvent(name, tickets) =>
       def create() = {
+        // 局部方法创建TicketSeller向其添加票券，并以EventCreated进行响应
         val eventTickets = createTicketSeller(name)
         val newTickets = (1 to tickets).map { ticketId =>
           TicketSeller.Ticket(ticketId)
@@ -43,6 +44,7 @@ class BoxOffice(implicit timeout: Timeout) extends Actor {
         eventTickets ! TicketSeller.Add(newTickets)
         sender() ! EventCreated(Event(name, tickets))
       }
+      // 创建EventCreated并响应或以EventExists作为响应
       context.child(name).fold(create())(_ => sender() ! EventExists)
 
 

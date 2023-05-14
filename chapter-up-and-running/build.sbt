@@ -1,3 +1,4 @@
+// 将来部署到Heroku上时所需要的
 enablePlugins(JavaServerAppPackaging)
 
 name := "goticks"
@@ -6,7 +7,7 @@ version := "1.0"
 
 organization := "com.goticks"
 
-libraryDependencies ++= {
+libraryDependencies ++= {  // 告诉sbt远程依赖的位置
   val akkaVersion = "2.6.19"
   Seq(
     "com.typesafe.akka" %% "akka-actor"      % akkaVersion,
@@ -21,6 +22,7 @@ libraryDependencies ++= {
 }
 
 val AkkaHttpVersion = "10.2.9"
+
 libraryDependencies += "com.typesafe.akka" %% "akka-http-spray-json" % AkkaHttpVersion
 
 // Assembly settings
